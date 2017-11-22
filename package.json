@@ -1,0 +1,25 @@
+{
+  "name": "msa_food_bot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cwmima/MSA_Food_bot.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/cwmima/MSA_Food_bot/issues"
+  },
+  "homepage": "https://github.com/cwmima/MSA_Food_bot#readme",
+  "dependencies": {
+    "botbuilder": "^3.12.0",
+    "hexo": "^3.4.1",
+    "restify": "^6.3.4"
+  },
+  "devDependencies": {}
+}
