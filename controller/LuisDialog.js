@@ -1,4 +1,5 @@
 var builder = require('botbuilder');
+var food = require('./FavouriteFoods');
 // Some sections have been omitted
 
 exports.startDialog = function (bot) {
@@ -9,7 +10,7 @@ exports.startDialog = function (bot) {
     bot.recognizer(recognizer);
 
     bot.dialog('GetCalories', function (session, args) {
-        if (!isAttachment(session)) {
+        //if (!isAttachment(session)) {
 
             // Pulls out the food entity from the session if it exists
             var foodEntity = builder.EntityRecognizer.findEntity(args.intent.entities, 'food');
@@ -22,7 +23,7 @@ exports.startDialog = function (bot) {
             } else {
                 session.send("No food identified! Please try again");
             }
-        }
+        //}
     }).triggerAction({
         matches: 'GetCalories'
     });
@@ -33,17 +34,42 @@ exports.startDialog = function (bot) {
         matches: 'DeleteFavourite'
     });
 
-    bot.dialog('GetFavourite', function(session, args){
-        session.send("GetFavourite intent found");
-    }).triggerAction({
-        matches: 'GetFavourite'
-    });
-
     bot.dialog('WantFood', function(session, args){
         session.send("WantFood intent found");
     }).triggerAction({
         matches: 'WantFood'
     });
+
+
+    bot.dialog('GetFavouriteFood', [
+        function (session, args, next) {
+            session.dialogData.args = args || {};        
+            if (!session.conversationData["username"]) {
+                builder.Prompts.text(session, "Enter a username to setup your account.");                
+            } else {
+                next(); // Skip if we already have this info.
+            }
+        },
+        function (session, results, next) {
+            //if (!isAttachment(session)) {
+
+                if (results.response) {
+                    session.conversationData["username"] = results.response;
+                }
+
+                session.send("Retrieving your favourite foods");
+                food.displayFavouriteFood(session, session.conversationData["username"]);   // <---- THIS LINE HERE IS WHAT WE NEED 
+            //}
+        }
+    ]).triggerAction({
+        matches: 'GetFavouriteFood'
+    });
+
+    bot.dialog('Welcome', function(session, args){
+		session.send("Welcome intent found");
+	}).triggerAction({
+		matches: "Welcome"
+	});
 
 
 }
