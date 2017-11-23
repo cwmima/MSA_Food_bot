@@ -1,13 +1,37 @@
 var rest = require('../API/RestClient');
 
 exports.displayFavouriteFood = function getFavouriteFood(session, username){
-    session.send("first place debug..."); 
+    //session.send("first place debug..."); 
 
     var url = 'http://foodbotgavin.azurewebsites.net/tables/FoodBot';
-    rest.getFavouriteFood(url, session, username, handleFavouriteFoodResponse)
+    rest.getFavouriteFood(url, session, username, handleFavouriteFoodResponse);
 
-    session.send("this place debug...");
+    //session.send("this place debug...");
 };
+
+exports.sendFavouriteFood = function postFavouriteFood(session, username, favouriteFood){
+    var url = 'http://foodbotgavin.azurewebsites.net/tables/FoodBot';
+    rest.postFavouriteFood(url, username, favouriteFood);
+};
+
+exports.deleteFavouriteFood = function deleteFavouriteFood(session,username,favouriteFood){
+    var url  = 'http://foodbotgavin.azurewebsites.net/tables/FoodBot';
+
+    rest.getFavouriteFood(url, session, username, function(message,session,username){
+
+        var allFoods = JSON.parse(message);
+        for(var i in allFoods) {
+            if (allFoods[i].FavouriteFood === favouriteFood && allFoods[i].username === username) {
+                console.log(allFoods[i]);
+                rest.deleteFavouriteFood(url, session, username, favouriteFood, allFoods[i].id, handleDeletedFoodResponse);
+            }
+        }
+    });
+};
+
+function handleDeletedFoodResponse(body,session,username, favouriteFood){
+    console.log('Done');
+}
 
 function handleFavouriteFoodResponse(message, session, username) {
     var favouriteFoodResponse = JSON.parse(message);
