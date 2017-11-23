@@ -1,0 +1,16 @@
+Yelp:
+{
+    "access_token": "tfo8HnZ9_XeqALlnT3MnTF0FugHWEdtvxKgMfkmICAoL3M8q4iT-UDaGT52Iv1rQ4MZuJZyogdPPQUUsm2TytdqBTM_oYcQjo3XQChr_9c9bmvEeHMN7vBh4yREWWnYx",
+    "expires_in": 636087064,
+    "token_type": "Bearer"
+}
+
+
+USDA:
+FclVHDrIxbNDj8eTgpv7CNrq5BktFjeTvhpfwilJ
+
+Food Bot
+App ID:
+80d38d1e-4b88-46bf-b76b-0da3eb3f0c5a
+App Password:
+buTII285)**gcydwGPIN87[

@@ -2,6 +2,7 @@ var builder = require('botbuilder');
 var food = require('./FavouriteFoods');
 var restaurant = require('./RestaurantCard');
 var nutrition = require('./NutritionCard');
+var customVision = require('./CustomVision');
 // Some sections have been omitted
 
 exports.startDialog = function (bot) {
@@ -41,7 +42,7 @@ exports.startDialog = function (bot) {
             // session.send("you want to delete " + foodEntity );
         },
         function (session, results,next) {
-        //if (!isAttachment(session)) {
+        if (!isAttachment(session)) {
             if (results.response) {
                 session.conversationData["username"] = results.response;
             }
@@ -56,7 +57,7 @@ exports.startDialog = function (bot) {
             } else {
                 session.send("No food identified! Please try again");
             }
-        //}
+        }
     }]).triggerAction({
         matches: 'DeleteFavourite'
     });
@@ -71,7 +72,7 @@ exports.startDialog = function (bot) {
             }
         },
         function (session, results, next) {
-            //if (!isAttachment(session)) {
+            if (!isAttachment(session)) {
                 if (results.response) {
                     session.conversationData["username"] = results.response;
                 }
@@ -86,14 +87,14 @@ exports.startDialog = function (bot) {
                 } else {
                     session.send("No food identified!!!");
                 }
-            //}
+            }
         }
     ]).triggerAction({
         matches: 'LookForFavourite'
     });
 
     bot.dialog('WantFood', function (session, args) {
-        //if (!isAttachment(session)) {
+        if (!isAttachment(session)) {
             // Pulls out the food entity from the session if it exists
             var foodEntity = builder.EntityRecognizer.findEntity(args.intent.entities, 'food');
 
@@ -104,7 +105,7 @@ exports.startDialog = function (bot) {
             } else {
                 session.send("No food identified! Please try again");
             }
-        //}
+        }
     }).triggerAction({
         matches: 'WantFood'
     });
@@ -120,7 +121,7 @@ exports.startDialog = function (bot) {
             }
         },
         function (session, results, next) {
-            //if (!isAttachment(session)) {
+            if (!isAttachment(session)) {
 
                 if (results.response) {
                     session.conversationData["username"] = results.response;
@@ -128,7 +129,7 @@ exports.startDialog = function (bot) {
 
                 session.send("Retrieving your favourite foods");
                 food.displayFavouriteFood(session, session.conversationData["username"]);   // <---- THIS LINE HERE IS WHAT WE NEED 
-            //}
+            }
         }
     ]).triggerAction({
         matches: 'GetFavouriteFood'
