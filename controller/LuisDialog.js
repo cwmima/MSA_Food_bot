@@ -12,7 +12,7 @@ exports.startDialog = function (bot) {
     bot.recognizer(recognizer);
 
     bot.dialog('GetCalories', function (session, args) {
-        //if (!isAttachment(session)) {
+        if (!isAttachment(session)) {
             // Pulls out the food entity from the session if it exists
             var foodEntity = builder.EntityRecognizer.findEntity(args.intent.entities, 'food');
 
@@ -24,7 +24,7 @@ exports.startDialog = function (bot) {
             } else {
                 session.send("No food identified! Please try again");
             }
-        //}
+        }
     }).triggerAction({
         matches: 'GetCalories'
     });
@@ -141,4 +141,17 @@ exports.startDialog = function (bot) {
 	});
 
 
+}
+
+function isAttachment(session) { 
+    var msg = session.message.text;
+    if ((session.message.attachments && session.message.attachments.length > 0) || msg.includes("http")) {
+        //call custom vision
+        customVision.retreiveMessage(session);
+
+        return true;
+    }
+    else {
+        return false;
+    }
 }
